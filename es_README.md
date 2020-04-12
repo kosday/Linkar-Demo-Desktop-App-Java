@@ -1,5 +1,7 @@
 # Linkar Demo Desktop App Java
 
+ejecutable en https://kosday.com/resources/
+
 Esta demo muestra el funcionamiento de un cliente persistente alimentando unas clases Linkar y mostrando la información resultante sobre unos formularios.
 
 #MainWindow
