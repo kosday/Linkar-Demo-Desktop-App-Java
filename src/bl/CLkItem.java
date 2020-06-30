@@ -10,12 +10,13 @@ import java.util.Arrays;
 import linkar.ASCII_Chars;
 import linkar.DBMV_Mark;
 import linkar.DeleteOptions;
-import linkar.RecoverIdType;
+//import linkar.GenericError;
 import linkar.LinkarClt;
-import linkar.RecordIdType;
-import linkar.NewOptions;
+import linkar.LinkarClt.DATAFORMATCRU_TYPE;
 import linkar.LinkarClt.DATAFORMAT_TYPE;
+import linkar.NewOptions;
 import linkar.ReadOptions;
+import linkar.RecordIdType;
 import linkar.UpdateOptions;
 
 
@@ -165,14 +166,13 @@ public class CLkItem extends MainClass {
     	if (fileName == null || fileName == "")
 			fileName = CLkItem.FILE_CLkItem;
     	
-        boolean dictionaries = false;
         boolean conversion = false;
         boolean formatSpec =  false;
         boolean originalRecords = false;
-    	ReadOptions readOptions = new ReadOptions(calculated, conversion, formatSpec, originalRecords, dictionaries);
+    	ReadOptions readOptions = new ReadOptions(calculated, conversion, formatSpec, originalRecords);
     	String customVars = "";
     	//Call to sincronous session version of Read function
-    	String lkstring = _LinkarClt.Read_Text(fileName, _Code, "", readOptions, LinkarClt.DATAFORMAT_TYPE.MV, customVars, 0);
+    	String lkstring = _LinkarClt.Read_Text(fileName, _Code, "", readOptions, DATAFORMATCRU_TYPE.MV, customVars, 0);
     	
     	char delimiter = ASCII_Chars.FS_chr;
     	char delimiterThisList = DBMV_Mark.AM;
@@ -226,36 +226,38 @@ public class CLkItem extends MainClass {
 
     	boolean readAfter = true;
         boolean calculated = false;
-        boolean dictionaries = false;
         boolean conversion = false;
         boolean formatSpec = false;
         boolean originalRecords = false;
         
-        boolean active_RecordIdTypeLinkar = false;
+        boolean active_RecordIdTypeLinkar = true;
         boolean active_RecordIdTypeRandom = false;
         boolean active_RecordIdTypeCustom = false;
-
-        String prefix = "";
-        String separator = "";
-        String formatSpecTxt = "";
-        boolean numeric = false;
-        int Length = 0;
-
-        RecordIdType recordIdType;
+        
+        RecordIdType recordIdType = new RecordIdType();
         if (active_RecordIdTypeLinkar)
-            recordIdType = new RecordIdType(prefix, separator, formatSpecTxt);
+        {
+            String prefix = "";
+            String separator = "";
+            String formatSpecTxt = "";
+            recordIdType = new RecordIdType(prefix,separator,formatSpecTxt);
+        }
         else if (active_RecordIdTypeRandom)
-            recordIdType = new RecordIdType(numeric, Length);
+        {
+            boolean numeric = false;
+            int length = 0;
+        	recordIdType = new RecordIdType(numeric,length);
+        }
         else if (active_RecordIdTypeCustom)
-            recordIdType = new RecordIdType(true);
-        else
-            recordIdType = new RecordIdType();
-        NewOptions NewOptions = new NewOptions(recordIdType, readAfter, calculated, conversion, formatSpec, originalRecords, dictionaries);
+        {
+        	recordIdType = new RecordIdType(true);
+        } 
+        NewOptions NewOptions = new NewOptions(recordIdType ,readAfter, calculated, conversion, formatSpec, originalRecords);
 		
         String customVars = "";
         String inputData = this.SetRecord();
         //Call to sincronous session version of New function
-        String lkstring = _LinkarClt.New(fileName, _Code, inputData, NewOptions, LinkarClt.DATAFORMAT_TYPE.MV, LinkarClt.DATAFORMAT_TYPE.MV, customVars, 0);
+        String lkstring = _LinkarClt.New_Text(fileName, _Code, inputData, NewOptions, DATAFORMAT_TYPE.MV, DATAFORMATCRU_TYPE.MV, customVars, 0);
     	
     	char delimiter = ASCII_Chars.FS_chr;
     	char delimiterThisList = DBMV_Mark.AM;
@@ -316,16 +318,15 @@ public class CLkItem extends MainClass {
 		boolean optimisticLockControl = false;
         boolean readAfter = false;
         boolean calculated = false;
-        boolean dictionaries = false;
         boolean conversion = false;
         boolean formatSpec = false;
         boolean originalRecord = false;
-        UpdateOptions UpdateOptions = new UpdateOptions(optimisticLockControl, readAfter, calculated, conversion, formatSpec, originalRecord, dictionaries);
+        UpdateOptions UpdateOptions = new UpdateOptions(optimisticLockControl, readAfter, calculated, conversion, formatSpec, originalRecord);
 		
         String customVars = "";
         String inputData = this.SetRecord();
         //Call to sincronous session version of Update function
-    	String lkstring = _LinkarClt.Update_Text(fileName, _Code, inputData, UpdateOptions, this.getItemOriginalContent(), LinkarClt.DATAFORMAT_TYPE.MV, LinkarClt.DATAFORMAT_TYPE.MV, customVars, 0);
+    	String lkstring = _LinkarClt.Update_Text(fileName, _Code, inputData, UpdateOptions, this.getItemOriginalContent(), DATAFORMAT_TYPE.MV, DATAFORMATCRU_TYPE.MV, customVars, 0);
     	
     	char delimiter = ASCII_Chars.FS_chr;
     	char delimiterThisList = DBMV_Mark.AM;
@@ -378,25 +379,14 @@ public class CLkItem extends MainClass {
     	if (fileName == null || fileName == "")
 			fileName = CLkItem.FILE_CLkItem;        		
 
-        boolean optimisticLock = false;
-        boolean activeRecoverLinkar = false;
-        String prefixRecoverLinkar = "";
-        String separatorRecoverLinkar = "";
-        boolean activeRecoverCustom = false;
+    	boolean optimisticLock = false;
 
-        RecoverIdType recoverIdType;
-        if (activeRecoverLinkar)
-            recoverIdType = new RecoverIdType(prefixRecoverLinkar, separatorRecoverLinkar);
-        else if (activeRecoverCustom)
-            recoverIdType = new RecoverIdType(true);
-        else
-            recoverIdType = new RecoverIdType();
-        DeleteOptions deleteOptions = new DeleteOptions(optimisticLock, recoverIdType);
+        DeleteOptions deleteOptions = new DeleteOptions(optimisticLock);    	
 		
         String customVars = "";
         
         //Call to sincronous session version of Delete function
-    	String lkstring = _LinkarClt.Delete_Text(fileName, _Code, deleteOptions, this.getItemOriginalContent(), LinkarClt.DATAFORMAT_TYPE.MV,  customVars, 0);
+    	String lkstring = _LinkarClt.Delete_Text(fileName, _Code, deleteOptions, this.getItemOriginalContent(), DATAFORMAT_TYPE.MV,  customVars, 0);
     	
     	char delimiter = ASCII_Chars.FS_chr;
     	char delimiterThisList = DBMV_Mark.AM;

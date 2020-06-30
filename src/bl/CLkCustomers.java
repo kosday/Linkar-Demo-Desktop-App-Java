@@ -5,9 +5,10 @@ import java.util.Arrays;
 import forms.LinkarDemo;
 import linkar.ASCII_Chars;
 import linkar.DBMV_Mark;
+//import linkar.GenericError;
 import linkar.LinkarClt;
+import linkar.LinkarClt.DATAFORMATCRU_TYPE;
 import linkar.LkException;
-import linkar.LinkarClt.DATAFORMAT_TYPE;
 import linkar.SelectOptions;
 
 public class CLkCustomers extends ArrayList<CLkCustomer> {
@@ -65,16 +66,15 @@ public class CLkCustomers extends ArrayList<CLkCustomer> {
     	if (fileName == null || fileName == "")
     		fileName = CLkCustomer.FILE_CLkCustomer;    	  
     	
-    	boolean dictionaries = false;
         boolean conversion = false;
         boolean formatSpec = false;
         boolean originalRecords = false;
         boolean onlyRecordId = false;
         boolean pagination = false;
-        SelectOptions selectOptions = new SelectOptions(onlyRecordId, pagination, numRegPag, numPag, calculated, conversion, formatSpec, originalRecords,dictionaries);
+        SelectOptions selectOptions = new SelectOptions(onlyRecordId, pagination, numRegPag, numPag, calculated, conversion, formatSpec, originalRecords);
     		
     	//Call to sincronous session version of Select function
-    	String lkstring = _LinkarClt.Select_Text(fileName, selectClause, sortClause, dictionariesClause, preSelectClause, selectOptions, LinkarClt.DATAFORMAT_TYPE.MV, "", 0);
+    	String lkstring = _LinkarClt.Select_Text(fileName, selectClause, sortClause, dictionariesClause, preSelectClause, selectOptions, DATAFORMATCRU_TYPE.MV, "", 0);
     	
     		this.clear();
     		if (lkstring != null && !lkstring.isEmpty())

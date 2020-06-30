@@ -16,6 +16,7 @@ import bl.CLkOrders;
 import bl.MV_LstItems_CLkOrder;
 import bl.SV_LstPartial_CLkOrder;
 import linkar.DBMV_Mark;
+//import linkar.GenericError;
 import linkar.LinkarClt;
 
 import javax.swing.JLabel;

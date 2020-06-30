@@ -5,9 +5,10 @@ import java.util.Arrays;
 import forms.LinkarDemo;
 import linkar.ASCII_Chars;
 import linkar.DBMV_Mark;
+//import linkar.GenericError;
 import linkar.LinkarClt;
+import linkar.LinkarClt.DATAFORMATCRU_TYPE;
 import linkar.LkException;
-import linkar.LinkarClt.DATAFORMAT_TYPE;
 import linkar.SelectOptions;
 
 public class CLkOrders extends ArrayList<CLkOrder> {
@@ -60,15 +61,14 @@ public class CLkOrders extends ArrayList<CLkOrder> {
     	if (fileName == null || fileName == "")
     		fileName = CLkOrder.FILE_CLkOrder;    	  
     	
-        boolean dictionaries = false;
         boolean conversion = false;
         boolean formatSpec = false;
         boolean originalRecords = false;
         boolean onlyRecordId = onlyIds;
         //Call to sincronous session version of Select function
-        SelectOptions selectOptions = new SelectOptions(onlyRecordId, pagination, numRegPag, numPag, calculated, conversion, formatSpec, originalRecords, dictionaries);
+        SelectOptions selectOptions = new SelectOptions(onlyRecordId, pagination, numRegPag, numPag, calculated, conversion, formatSpec, originalRecords);
     		
-    	String lkstring = _LinkarClt.Select_Text(fileName, selectClause, sortClause, dictionariesClause, preSelectClause, selectOptions, LinkarClt.DATAFORMAT_TYPE.MV, "", 0);
+    	String lkstring = _LinkarClt.Select_Text(fileName, selectClause, sortClause, dictionariesClause, preSelectClause, selectOptions, DATAFORMATCRU_TYPE.MV, "", 0);
     	
     		this.clear();
     		

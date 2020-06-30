@@ -10,8 +10,9 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import linkar.ASCII_Chars;
 import linkar.CredentialsOptions;
 import linkar.DBMV_Mark;
-import linkar.LinkarClt.DATAFORMAT_TYPE;
+//import linkar.GenericError;
 import linkar.LinkarClt;
+import linkar.LinkarClt.DATAFORMAT_TYPE;
 import linkar.LkData;
 import linkar.LkException;
 
@@ -198,7 +199,7 @@ public class LinkarDemo {
 	            String freeText = txtFreeText.getText();
 	            
 	            //Create CredentialsOptions object with connection data
-	            CredentialsOptions credentialsOptions = new CredentialsOptions(host, entrypoint, (short)port, username, password, language, freeText);
+	            CredentialsOptions credentialsOptions = new CredentialsOptions(host,entrypoint, (short)port, username, password,  language, freeText);
 	            //Create LinkarClt client
 				_LinkarClt = new LinkarClt();
 				//Execute client Login
@@ -227,7 +228,7 @@ public class LinkarDemo {
 				    txtFreeText.setEnabled(false);
 				    		    
 	                try {
-						String lkstring = _LinkarClt.GetVersion_Text(LinkarClt.DATAFORMAT_TYPE.MV);
+						String lkstring = _LinkarClt.GetVersion_Text(DATAFORMAT_TYPE.MV);
 					   	String[] parts = lkstring.split(ASCII_Chars.FS_str, -1);    	
 				        if (parts.length >= 1)
 				        {
