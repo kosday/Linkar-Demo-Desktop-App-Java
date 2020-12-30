@@ -2,6 +2,8 @@
 
 executable in https://kosday.com/resources/
 
+We advise you to use the Linkar Framework for .NET, CORE, JAVA and C.
+
 This demo shows the working of a persistent client feeding some Linkar classes and showing the resultant information on some forms
 
 # MainWindow 
